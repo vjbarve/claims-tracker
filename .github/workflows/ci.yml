@@ -45,4 +45,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report
-          path: api/coverage
+          path: .api/coverage
