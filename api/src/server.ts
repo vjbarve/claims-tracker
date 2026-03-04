@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import claimsRouter from './routes/claims'
+import claimsRouter from './routes/claims';
 
 const app = express();
 

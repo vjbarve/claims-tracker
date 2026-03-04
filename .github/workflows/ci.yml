@@ -9,24 +9,40 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [18.x]
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
-        with: 
+        with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependecies
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: api/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('api/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
         run: npm install
         working-directory: ./api
 
-      - name: Run tests
+      - name: Run ESLint
+        run: npm run lint
+        working-directory: ./api
+
+      - name: Run tests with coverage
         run: npm test
         working-directory: ./api
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: api/coverage

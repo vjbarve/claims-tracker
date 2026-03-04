@@ -12,7 +12,7 @@ const router = Router();
  */
 router.get('/', (_req, res) => {
     res.status(200).json(claims);
-})
+});
 
 /**
  * GET /api/claims/:id
@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
     }
 
     res.status(200).json(claim);
-})
+});
 
 /**
  * POST /api/claims
@@ -52,6 +52,6 @@ router.post('/', (req, res) => {
             console.error(err);
         res.status(500).json({ message: 'Internal server error'});
     }
-})
+});
 
 export default router;

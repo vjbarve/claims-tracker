@@ -13,13 +13,13 @@ describe('Claims API', () => {
         const res = await request(app).get('/api/claims');
         expect(res.status).toBe(200);
         expect(res.body.length).toBe(claims.length);
-    })
+    });
 
     it('GET /api/claims/:id returns a claim', async () => {
         const res = await request(app).get('/api/claims/1');
         expect(res.status).toBe(200);
         expect(res.body.id).toBe("1");
-    })
+    });
 
     it('GET /api/claims/:id returns 404 for unknown claim', async () => {
     const res = await request(app).get('/api/claims/999');
@@ -52,4 +52,4 @@ describe('Claims API', () => {
     expect(res.status).toBe(400);
     expect(res.body.details).toBeDefined();
   });
-})
+});
