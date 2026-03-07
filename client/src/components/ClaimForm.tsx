@@ -1,37 +1,24 @@
 import { useState } from "react";
-import { createClaim, type ClaimType } from "../api/claimsApi";
+import {type ClaimType } from "../api/claimsApi";
 
-export default function ClaimForm({ onClaimCreated }: { onClaimCreated: () => void }) {
-    const [claimType, setClaimType] = useState<ClaimType>("Health");
+export default function ClaimForm({ submitClaim }: { submitClaim: any }) {
+    const [type, setType] = useState<ClaimType>("Health");
     const [amount, setAmount] = useState("");
     const [description, setDescription] = useState("");
-    const [error, setError] = useState("");
 
     const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
 
-        if(!amount || Number(amount) <= 0) {
-            setError("Amount must be greated than 0");
-            return;
-        }
+        await submitClaim({
+            type,
+            amount: Number(amount),
+            description,
+            status: "Submitted",
+            submittedAt: new Date().toISOString()
+        });
 
-        try {
-            await createClaim({
-                type: claimType,
-                amount: Number(amount),
-                description,
-                status: "Submitted",
-                submittedAt: new Date().toISOString()
-            });
-
-            setAmount("");
-            setDescription("");
-            setError("");
-
-            onClaimCreated();
-        } catch {
-            setError("Failed to create claim");
-        }
+        setAmount("");
+        setDescription("");
     };
 
     return (

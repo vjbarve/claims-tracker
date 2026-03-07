@@ -1,19 +1,19 @@
-import { useState } from 'react';
 import ClaimsList from './components/claimsList';
 import ClaimForm from './components/ClaimForm';
+import { useClaims } from './hooks/useClaims';
 
 function App() {
-  const [refreshKey, setRefreshKey] = useState(0);
-
-  const reloadClaims = () => {
-    setRefreshKey((k) => k + 1);
-  }
+  const { claims, loading, error, submitClaim } = useClaims();
 
   return (
     <div>
         <h1>Claims Tracker</h1>
-        <ClaimForm onClaimCreated={reloadClaims} />
-        <ClaimsList refreshKey={refreshKey}/>
+        <ClaimForm submitClaim={submitClaim} />
+
+        {loading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
+        
+        <ClaimsList claims={claims}/>
     </div>
   );
 }
