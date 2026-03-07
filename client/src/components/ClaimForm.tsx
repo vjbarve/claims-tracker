@@ -27,8 +27,8 @@ export default function ClaimForm({ submitClaim }: { submitClaim: any }) {
             <label>
                 Claim Type
                 <select
-                    value={claimType}
-                    onChange={(e) => setClaimType(e.target.value)}
+                    value={type}
+                    onChange={(e) => setType(e.target.value as ClaimType)}
                 >
                     <option value="Health">Health</option>
                     <option value="Dental">Dental</option>
@@ -48,8 +48,6 @@ export default function ClaimForm({ submitClaim }: { submitClaim: any }) {
                 Description
                 <input value={description} onChange={(e) => setDescription(e.target.value)} />
             </label>
-
-            {error && <p role="alert">{error}</p> }
 
             <button type="submit">Submit claim</button>
         </form>

@@ -20,7 +20,7 @@ export function useClaims() {
         }
     };
 
-    const submitClaim = async(claim: Omit<Claim, "id") => {
+    const submitClaim = async(claim: Omit<Claim, "id">) => {
         try {
             await createClaim(claim);
             await fetchClaims();
